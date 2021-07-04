@@ -7,7 +7,7 @@ class Api::V1::GuestsController < ApplicationController
 
       now = Time.current
       guest_possible_dates_hash = event.possible_dates.map do |date|
-        { possible_date_id: date.id, guest_id: guest.id, status: guest_params["possible_dates"][date.date], created_at: now, updated_at: now }
+        { possible_date_id: date.id, guest_id: guest.id, status: guest_params["possible_dates"][date.id.to_s], created_at: now, updated_at: now }
       end
 
       GuestPossibleDate.insert_all(guest_possible_dates_hash)
