@@ -14,9 +14,6 @@ class Api::V1::GuestsController < ApplicationController
     end
 
     render json: { status: 'SUCCESS', guest: event.guests }
-
-    # rescue StandardError => e
-    #   render json: { status: 'FAILED', error: e.message }
   end
 
   private
