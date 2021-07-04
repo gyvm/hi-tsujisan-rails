@@ -1,12 +1,22 @@
 class Api::V1::GuestsController < ApplicationController
   def create
+    event = Event.find(Url.find_by(url: "JQbOIs6Lj01625383368").event_id)
+
     ActiveRecord::Base.transaction do
-      @event = Event.find(Url.find_by(url: params[:url]).event_id)
-      @event.guests.create(guest_params)
+      guest = event.guests.create(nickname: guest_params["nickname"], comment: guest_params["comment"])
+
+      now = Time.current
+      guest_possible_dates_hash = event.possible_dates.map do |date|
+        { possible_date_id: date.id, guest_id: guest.id, status: guest_params["possible_dates"][date.date], created_at: now, updated_at: now }
+      end
+
+      GuestPossibleDate.insert_all(guest_possible_dates_hash)
     end
-    render json: { status: 'SUCCESS', guest: @event.guests }
-  rescue StandardError => e
-    render json: { status: 'FAILED', error: e.message }
+
+    render json: { status: 'SUCCESS', guest: event.guests }
+
+    # rescue StandardError => e
+    #   render json: { status: 'FAILED', error: e.message }
   end
 
   private
