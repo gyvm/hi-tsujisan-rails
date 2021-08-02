@@ -6,10 +6,9 @@ class Api::V1::EventsController < ApplicationController
 
   def show
     @event = Event.find(Url.find_by(url: params[:id]).event_id)
-    print(@event.guests[1])
-    Event.find(Url.find_by(url: 'VoEaT2JShD1620260925').event_id)
-
-    render json: { status: 'SUCCESS', message: 'Loaded the event', event_data: @event, guests_data: @event.guests, date_rate: @event.count_guests_per_date }
+    # @event = Event.find(Url.find_by(url: 'NuBK6nDxQr1625414032').event_id)
+    possible_dates = @event.possible_dates.select("id, date").where(deleted: false)
+    render json: { status: 'SUCCESS', event_info: @event, possible_dates: possible_dates, guests_data: @event.guests, date_rate: @event.count_guests_per_date }
   end
 
   def create
