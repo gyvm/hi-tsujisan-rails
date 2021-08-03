@@ -8,7 +8,8 @@ class Api::V1::EventsController < ApplicationController
     @event = Event.find(Url.find_by(url: params[:id]).event_id)
     # @event = Event.find(Url.find_by(url: 'NuBK6nDxQr1625414032').event_id)
     possible_dates = @event.possible_dates.select("id, date").where(deleted: false)
-    render json: { status: 'SUCCESS', event_info: @event, possible_dates: possible_dates, guests_data: @event.guests, date_rate: @event.count_guests_per_date }
+    render json: { status: 'SUCCESS', event_info: @event, possible_dates: possible_dates, guests_data: @event.guests, guest_possible_dates: @event.get_guest_possible_dates(@event.id),
+                   date_rate: @event.count_guests_per_date(@event.id) }
   end
 
   def create
