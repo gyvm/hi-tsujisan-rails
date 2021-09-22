@@ -47,3 +47,9 @@ Topページであるイベント作成画面より、イベント名、候補�
 <p align="center">
 <img width="270" alt="スクリーンショット 2021-09-23 0 47 55" src="https://user-images.githubusercontent.com/77700130/134406784-805a194a-72f7-46a7-9bec-eb0dcfa611ee.png">
 </p>
+
+## ToDo
+- [ ] サーバレス環境の検討
+- [ ] Rspecによるテストの追加
+- [ ] パスコードでのイベントプライベート化機能
+- [ ] [フロントエンドのTodo](https://github.com/gyvm/hi-tsujisan-frontend#todo)
