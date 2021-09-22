@@ -17,7 +17,7 @@
 <img src="https://user-images.githubusercontent.com/77700130/134404371-efd4807c-7186-41d2-bd0d-e4e10a625dda.jpg"/>
 </p>
   
-## アプリケション構成図
+## アプリケーション構成図
 <!-- ![hitsujisan-application](https://user-images.githubusercontent.com/77700130/134404265-ba3fa110-5cd2-4515-a6a7-d87828e840ac.jpg) -->
 <p align="center">
 <img src="https://user-images.githubusercontent.com/77700130/134404265-ba3fa110-5cd2-4515-a6a7-d87828e840ac.jpg"/>
