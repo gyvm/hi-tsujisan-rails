@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "EventApi", type: :request do
+  # 現状はPostmanで担保する
   describe "#create" do
     it 'creates a event' do
         post api_v1_events_path, params: {

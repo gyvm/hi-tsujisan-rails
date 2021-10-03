@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "GuestApis", type: :request do
+  # 現状はPostmanで担保する
   describe "GET /guest_apis" do
     describe "#create" do
       it 'create a guest data' do
