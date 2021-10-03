@@ -29,6 +29,9 @@ gem 'dotenv-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'rspec-rails', '>= 3.6.0'
+  gem "factory_bot_rails", ">= 4.10.0"
+  # gem 'rubocop-rails', require: false
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
@@ -36,6 +39,7 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
