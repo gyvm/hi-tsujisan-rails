@@ -18,10 +18,9 @@ RSpec.describe Url, type: :model do
   end
 
   it "is invalid with a duplicate url" do
-    FactoryBot.create(:url)
-    url = FactoryBot.build(:url)
-    url.valid?
-    expect(url.errors[:url]).to include("has already been taken")
+    url_1 = FactoryBot.create(:url)
+    url_2 = FactoryBot.build(:url, url: url_1.url)
+    url_2.valid?
+    expect(url_2.errors[:url]).to include("has already been taken")
   end
-
 end

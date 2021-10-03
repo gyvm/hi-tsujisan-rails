@@ -19,10 +19,10 @@ RSpec.describe PossibleDate, type: :model do
 
   # 同イベントの日付の重複を検知する
   # it "does something with multiple date" do
-  #   FactoryBot.create(:possible_date)
-  #   possible_date = FactoryBot.create(:possible_date)
-  #   possible_date.valid?
-  #   expect(possible_date.errors[:date]).to include("has already been taken")
+  #   possible_date_1 = FactoryBot.create(:possible_date)
+  #   possible_date_2 = FactoryBot.build(:possible_date)
+  #   possible_date_2.valid?
+  #   expect(possible_date_2.errors[:date]).to include("has already been taken")
   # end
 
 end
