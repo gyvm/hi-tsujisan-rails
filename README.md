@@ -14,7 +14,7 @@
     - FW
         - Ruby on Rails
         - Flutter
-            - [Repository](https://github.com/gyvm/hi-tsujisan-frontend)
+            - [Repository](https://github.com/gyvm/hi-tsujisan-flutter)
 
 ## ネットワーク構成図
 <!-- ![hitsujisan-network](https://user-images.githubusercontent.com/77700130/134404371-efd4807c-7186-41d2-bd0d-e4e10a625dda.jpg) -->
