@@ -1,7 +1,6 @@
 require 'swagger_helper'
 
 describe 'Events API', type: :request do
-
   path '/api/v1/events/{id}' do
     post 'Creates an event' do
       tags 'Events'
@@ -10,7 +9,7 @@ describe 'Events API', type: :request do
       produces 'application/json'
       parameter name: :event, in: :body, schema: {
         oneOf: [
-          { '$ref' => '#/components/schemas/CreateEventRequest' },
+          { '$ref' => '#/components/schemas/CreateEventRequest' }
         ]
       }
 

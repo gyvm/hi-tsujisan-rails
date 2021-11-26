@@ -1,10 +1,6 @@
 require 'swagger_helper'
 
-RSpec.describe 'api/guests', type: :request do
-end
-
 describe 'Guests API', type: :request do
-
   path '/api/v1/guests/{id}' do
     post 'Creates an guest' do
       tags 'Guests'
@@ -13,7 +9,7 @@ describe 'Guests API', type: :request do
       produces 'application/json'
       parameter name: :guest, in: :body, schema: {
         oneOf: [
-          { '$ref' => '#/components/schemas/CreateGuestRequest' },
+          { '$ref' => '#/components/schemas/CreateGuestRequest' }
         ]
       }
 
