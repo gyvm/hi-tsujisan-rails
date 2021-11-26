@@ -5,7 +5,7 @@ FactoryBot.define do
     possible_date_id { FactoryBot.create(:possible_date).id }
 
     trait :status_is_string do
-      status { "1" }
+      status { '1' }
     end
   end
 end
