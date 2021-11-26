@@ -1,1 +1,23 @@
 inherit_from: .rubocop_todo.yml
+
+inherit_mode:
+  merge:
+    - Exclude
+
+AllCops:
+  DisabledByDefault: true
+  Exclude:
+    - 'gems/**/*'
+  NewCops: enable
+
+Bundler:
+  Enabled: true
+
+Gemspec:
+  Enabled: true
+
+Lint:
+  Enabled: true
+
+Security:
+  Enabled: true

@@ -1,8 +1,5 @@
 require 'swagger_helper'
 
-RSpec.describe 'api/guests', type: :request do
-end
-
 describe 'Guests API', type: :request do
   path '/api/v1/guests/{id}' do
     post 'Creates an guest' do
