@@ -14,7 +14,7 @@ describe 'Events API', type: :request do
         ]
       }
 
-      response '200', 'blog created' do
+      response '200', 'event created' do
         schema oneOf: [{ '$ref' => '#/components/schemas/CreateEventResponse' }]
         run_test!
       end
