@@ -11,6 +11,7 @@ gem 'rack-cors'
 gem 'rails'
 gem 'config'
 gem 'activeadmin'
+gem 'sass-rails'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
