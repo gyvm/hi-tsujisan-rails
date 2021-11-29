@@ -12,7 +12,7 @@ require 'action_mailbox/engine'
 require 'action_text/engine'
 require 'action_view/railtie'
 require 'action_cable/engine'
-# require "sprockets/railtie"
+require "sprockets/railtie"
 require 'rails/test_unit/railtie'
 
 # Require the gems listed in Gemfile, including any gems
@@ -43,5 +43,8 @@ module HiTsujisanRails
                        helper_specs: false,
                        routing_specs: false
     end
+
+    config.middleware.use ActionDispatch::Flash
+    
   end
 end
