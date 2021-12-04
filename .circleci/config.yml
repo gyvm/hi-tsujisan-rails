@@ -1,0 +1,63 @@
+version: 2.1
+
+refs:
+  docker-image: &docker-image
+    circleci/ruby:2.7-node-browsers-legacy
+
+orbs:
+  ruby: circleci/ruby@1.2.0
+  node: circleci/node@4.8.1
+
+jobs:
+  build:
+    docker:
+      - image: *docker-image
+        environment:
+          RAILS_ENV: test
+      - image: circleci/mysql:8.0.23
+        environment:
+          MYSQL_USER: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_DATABASE: circle_test
+
+    steps:
+      - checkout
+
+      - ruby/install-deps
+
+      - run:
+          name: check database
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
+      - run:
+          name: database migrate
+          command: bundle exec rails db:create
+      - run:
+          name: check code style
+          command: bundle exec rubocop
+      - run:
+          name: check security
+          command: bundle exec brakeman -5 -A -w 1 -e -z
+      - run:
+          name: check diff swagger.yml
+          command: |
+            bundle exec rake rswag:specs:swaggerize
+            git diff --exit-code -- swagger
+      - run:
+          name: run rspec test
+          command: bundle exec rspec
+
+      - store_artifacts:
+          path: coverage
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+
+workflows:
+  version: 2
+  on_push:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore:
+                - main
