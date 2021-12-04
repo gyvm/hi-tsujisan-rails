@@ -16,7 +16,6 @@ jobs:
           RAILS_ENV: test
       - image: circleci/mysql:8.0.23
         environment:
-          MYSQL_USER: root
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_DATABASE: circle_test
 
