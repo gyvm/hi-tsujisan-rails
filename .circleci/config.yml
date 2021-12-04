@@ -2,7 +2,7 @@ version: 2.1
 
 refs:
   docker-image: &docker-image
-    circleci/ruby:2.7-node-browsers-legacy
+    circleci/ruby:3.0.2-node-browsers-legacy
 
 orbs:
   ruby: circleci/ruby@1.2.0
