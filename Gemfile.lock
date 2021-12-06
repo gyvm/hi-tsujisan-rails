@@ -367,6 +367,7 @@ DEPENDENCIES
   rubocop
   rubocop-performance
   rubocop-rails
+  sass-rails
   spring
   spring-commands-rspec
   tzinfo-data
