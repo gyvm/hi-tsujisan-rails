@@ -1,0 +1,60 @@
+version: 2.1
+
+refs:
+  docker-image: &docker-image
+    circleci/ruby:3.0.2-node-browsers-legacy
+
+orbs:
+  ruby: circleci/ruby@1.2.0
+  node: circleci/node@4.8.1
+
+jobs:
+  build:
+    docker:
+      - image: *docker-image
+        environment:
+          RAILS_ENV: test
+          DB_HOST: 127.0.0.1
+      - image: circleci/mysql:8.0.23
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_DATABASE: hitsujisan_test
+
+    steps:
+      - checkout
+
+      - ruby/install-deps
+
+      - run:
+          name: check database
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
+      - run:
+          command: bundle exec rails db:environment:set RAILS_ENV=test
+      - run:
+          name: set-up database
+          command: bundle exec rails db:schema:load --trace
+      - run:
+          name: check code style
+          command: bundle exec rubocop
+      - run:
+          name: check security
+          command: bundle exec brakeman -5 -A -w 1 -e -z
+      - run:
+          name: check diff swagger.yml
+          command: |
+            bundle exec rake rswag:specs:swaggerize
+            git diff --exit-code -- swagger
+      # 一時的にコメントアウト
+      # - run:
+      #     name: run rspec test
+      #     command: bundle exec rspec
+
+workflows:
+  version: 2
+  on_push:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore:
+                - main

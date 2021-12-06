@@ -16,11 +16,14 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rspec-rails'
   gem 'rubocop'
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
   gem 'better_errors'
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-doc'
   gem 'pry-rails'
+  gem 'brakeman'
 
   gem 'rswag'
 end
