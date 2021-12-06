@@ -23,6 +23,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-doc'
   gem 'pry-rails'
+  gem 'brakeman'
 
   gem 'rswag'
 end
