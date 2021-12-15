@@ -2,23 +2,28 @@ class Api::V1::EventsController < ApplicationController
   require 'date'
   require 'securerandom'
 
-  # before_action :find_event, only: [:show]
+  protect_from_forgery
 
   def show
-    @event = Event.find(Url.find_by(url: params[:id]).event_id)
-    # @event = Event.find(Url.find_by(url: 'NuBK6nDxQr1625414032').event_id)
-    possible_dates = @event.possible_dates.select('id, date').where(deleted: false)
-    render json: { status: 'SUCCESS', event_info: @event, possible_dates: possible_dates, guests_data: @event.guests, guest_possible_dates: @event.get_guest_possible_dates(@event.id),
-                   date_rate: @event.count_guests_per_date(@event.id) }
+    event_id = Url.find_by(url: params[:id]).event_id
+    if event_id.present?
+      event = Event.eager_load(possible_dates: :guests)
+                   .where(id: event_id)
+      binding.pry
+      render json: event, root: "data", adapter: :json
+    else
+      head :not_found
+    end
   end
 
   def create
-    str_unixtime = Time.now.to_i.to_s
-    shared_url = SecureRandom.alphanumeric(10) + str_unixtime
+    unixtime = Time.now.to_i.to_s
+    shared_url = SecureRandom.alphanumeric(10) + unixtime.to_s
 
     ActiveRecord::Base.transaction do
       @event = Event.create(name: event_params['name'], description: event_params['description'])
       now = Time.current
+
       possible_dates_hash = event_params['possible_dates'].map do |date|
         { event_id: @event.id, date: date, created_at: now, updated_at: now }
       end
@@ -29,10 +34,6 @@ class Api::V1::EventsController < ApplicationController
   end
 
   private
-
-  # def find_event
-  #   @event = Event.find(Url.find_by(url: params[:id]).event_id)
-  # end
 
   def event_params
     params.require(:event).permit(:name, :description, possible_dates: [])
