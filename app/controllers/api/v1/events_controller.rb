@@ -5,11 +5,14 @@ class Api::V1::EventsController < ApplicationController
   # before_action :find_event, only: [:show]
 
   def show
-    @event = Event.find(Url.find_by(url: params[:id]).event_id)
-    # @event = Event.find(Url.find_by(url: 'NuBK6nDxQr1625414032').event_id)
-    possible_dates = @event.possible_dates.select('id, date').where(deleted: false)
-    render json: { status: 'SUCCESS', event_info: @event, possible_dates: possible_dates, guests_data: @event.guests, guest_possible_dates: @event.get_guest_possible_dates(@event.id),
-                   date_rate: @event.count_guests_per_date(@event.id) }
+    event_id = Url.find_by(url: params[:id]).event_id
+    if event_id.present?
+      event = Event.eager_load(possible_dates: :guests)
+                   .where(id: event_id)
+      render json: event, root: "data", adapter: :json
+    else
+      head :not_found
+    end
   end
 
   def create
