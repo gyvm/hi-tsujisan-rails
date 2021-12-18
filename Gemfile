@@ -10,6 +10,7 @@ gem 'puma'
 gem 'rack-cors'
 gem 'rails'
 gem 'config'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
