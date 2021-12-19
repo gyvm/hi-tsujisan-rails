@@ -36,7 +36,7 @@
 
 ## ToDo
 - [ ] Open APIに対応
-- [ ] Serializerの使用
+- [x] Serializerの使用
 - [x] CircleCIの導入
 - [ ] MySQLからPostgreSQLへ移行
 - [ ] 新規機能の検討、追加
