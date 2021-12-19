@@ -27,7 +27,7 @@ class Api::V1::EventsController < ApplicationController
       end
       PossibleDate.insert_all(possible_dates_hash)
       event.create_url(url: shared_url)
-      render json: event.url, root: "data", adapter: :json
+      render json: event, serializer: EventCreateSerializer, root: "data", adapter: :json
     end
     rescue ActiveRecord::RecordInvalid
       head :unprocessable_entity
