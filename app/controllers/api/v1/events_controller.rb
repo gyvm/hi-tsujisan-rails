@@ -8,7 +8,7 @@ class Api::V1::EventsController < ApplicationController
     event_id = Url.find_by(url: params[:id]).event_id
     if event_id.present?
       event = Event.eager_load(possible_dates: :guests)
-                   .where(id: event_id)
+                   .find_by(id: event_id)
       render json: event, root: "data", adapter: :json
     else
       head :not_found
