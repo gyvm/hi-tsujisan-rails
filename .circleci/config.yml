@@ -29,8 +29,6 @@ jobs:
           name: check database
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run:
-          command: bundle exec rails db:environment:set RAILS_ENV=test
-      - run:
           name: set-up database
           command: bundle exec rails db:schema:load --trace
       - run:
