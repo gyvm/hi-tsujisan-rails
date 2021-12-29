@@ -5,7 +5,11 @@ class Api::V1::EventsController < ApplicationController
   # before_action :find_event, only: [:show]
 
   def show
-    event_id = Url.find_by(url: params[:id]).event_id
+    url = Url.find_by(url: params[:id])
+    if url.present?
+      event_id = url.event_id
+    end
+
     if event_id.present?
       event = Event.eager_load(possible_dates: :guests)
                    .find_by(id: event_id)
