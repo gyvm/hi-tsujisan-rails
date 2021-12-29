@@ -5,27 +5,36 @@ class Api::V1::EventsController < ApplicationController
   # before_action :find_event, only: [:show]
 
   def show
-    @event = Event.find(Url.find_by(url: params[:id]).event_id)
-    # @event = Event.find(Url.find_by(url: 'NuBK6nDxQr1625414032').event_id)
-    possible_dates = @event.possible_dates.select('id, date').where(deleted: false)
-    render json: { status: 'SUCCESS', event_info: @event, possible_dates: possible_dates, guests_data: @event.guests, guest_possible_dates: @event.get_guest_possible_dates(@event.id),
-                   date_rate: @event.count_guests_per_date(@event.id) }
+    url = Url.find_by(url: params[:id])
+    if url.present?
+      event_id = url.event_id
+    end
+
+    if event_id.present?
+      event = Event.eager_load(possible_dates: :guests)
+                   .find_by(id: event_id)
+      render json: event, root: "data", adapter: :json
+    else
+      head :not_found
+    end
   end
 
   def create
-    str_unixtime = Time.now.to_i.to_s
-    shared_url = SecureRandom.alphanumeric(10) + str_unixtime
+    unixtime = Time.now.to_i
+    shared_url = SecureRandom.alphanumeric(10) + unixtime.to_s
 
     ActiveRecord::Base.transaction do
-      @event = Event.create(name: event_params['name'], description: event_params['description'])
+      event = Event.create(name: event_params['name'], description: event_params['description'])
       now = Time.current
       possible_dates_hash = event_params['possible_dates'].map do |date|
-        { event_id: @event.id, date: date, created_at: now, updated_at: now }
+        { event_id: event.id, date: date, created_at: now, updated_at: now }
       end
       PossibleDate.insert_all(possible_dates_hash)
-      @event.create_url(url: shared_url)
+      event.create_url(url: shared_url)
+      render json: event, serializer: EventCreateSerializer, root: "data", adapter: :json
     end
-    render json: { status: 'SUCCESS', event: @event, url: shared_url }
+    rescue ActiveRecord::RecordInvalid
+      head :unprocessable_entity
   end
 
   private

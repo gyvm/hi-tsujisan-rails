@@ -24,10 +24,11 @@ development:
 
 test:
   <<: *default
-  database: hitsujisan_test
-  username: root
-  host: <%= ENV['DB_HOST'] %>
-  
+  database: 'hitsujisan_test'
+  username: <%= ENV['CIRCLECI'] ? 'root' : ENV['DATABASE_TEST_USER'] %>
+  password: <%= ENV['CIRCLECI'] ? '' : ENV['DATABASE_TEST_PASSWORD'] %>
+  host: <%= ENV['CIRCLECI'] ? ENV['DB_HOST'] : 'localhost' %>
+
 production:
   <<: *default
   database: <%= ENV['HI_TSUJISAN_RAILS_DATABASE_PROD_NAME'] %>
