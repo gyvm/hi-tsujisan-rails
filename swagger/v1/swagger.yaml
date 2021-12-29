@@ -5,26 +5,6 @@ info:
   version: v1
 paths:
   "/api/v1/events/{id}":
-    post:
-      summary: Creates an event
-      tags:
-      - Events
-      operationId: CreateEvent
-      parameters: []
-      responses:
-        '200':
-          description: event created
-          content:
-            application/json:
-              schema:
-                oneOf:
-                - "$ref": "#/components/schemas/CreateEventResponse"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              oneOf:
-              - "$ref": "#/components/schemas/CreateEventRequest"
     get:
       summary: Retrieves an event
       operationId: GetEvent
@@ -38,11 +18,48 @@ paths:
           type: string
       responses:
         '200':
-          description: events found
+          description: event found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/GetEventResponse"
+                type: object
+                properties:
+                  data:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    description:
+                      type: text
+                required:
+                - data
+        '404':
+          description: event not found
+  "/api/v1/events":
+    post:
+      summary: Creates an event
+      tags:
+      - Events
+      operationId: CreateEvent
+      parameters: []
+      responses:
+        '500':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                possible_dates:
+                  type: array
+                  items:
+                    type: string
+        required: true
   "/api/v1/guests/{id}":
     post:
       summary: Creates an guest
