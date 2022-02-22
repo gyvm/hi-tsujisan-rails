@@ -30,7 +30,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.3'
+  gem 'listen', '~> 3.7'
   gem 'spring'
   gem 'spring-commands-rspec'
 end
